@@ -42,7 +42,8 @@ from data_visualization import (
 )
 
 from feature_engineering import(
-    process_feature_engineering
+    process_feature_engineering,
+    remove_stop_words
 )
 
 
@@ -166,6 +167,7 @@ def main():
     # Clean the data by removing punctuation
     news_df = clean_text(news_df, "Content", "Content")
     news_df = clean_text(news_df, "Title", "Title")
+    df_clean, stop_words = remove_stop_words(news_df)
 
     # -------------------------------------------------------------------------------------------------
     # Data exploration
@@ -235,7 +237,7 @@ def main():
         visualize_composition(news_df)
         visualize_real_fake(news_df)
         visualize_news_celebrity(news_df)
-        df_clean, stop_words, total_words, maxlen = process_feature_engineering(news_df)
+
         visualize_legit_word_cloud_plot(df_clean, stop_words)
         visualize_fake_word_cloud_plot(df_clean, stop_words)
 
@@ -248,7 +250,7 @@ def main():
     while run_again:
 
         # build models, validate, and tune hyperparameters
-        build_validate_and_tune(news_df)
+        build_validate_and_tune(df_clean)
 
         # make a prediction on a news article
         predict_single_case()

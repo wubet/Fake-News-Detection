@@ -491,12 +491,12 @@ def deep_learning_model(df):
     max_length = 200 #np.max([len(news) for news in df['Content'].tolist()])
 
     # extract data
-    X = df[['Title', 'Content']].values
+    X = df['clean_joined']
     Y = df['is_fake'].values
     labels = Y.astype('int')
 
     # tokenize the words
-    features, trained_tokenizer = tokenize_words(raw_data=X[:, 1], max_length=max_length)
+    features, trained_tokenizer = tokenize_words(raw_data=X, max_length=max_length)
 
     # extract the category column in original dataset
     category_col = df['Category'].tolist()

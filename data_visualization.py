@@ -43,18 +43,6 @@ def visualize_news_celebrity(news_df):
     # bins = compute_histogram_bins(is_news_data, 10)
     plotSingleHistogram(is_news_data, is_no_news_data, "Is News", "Count", "News and Celebroty Count")
 
-# visualize content catagory
-# def visulaize_content_catagory(df):
-#     plt.figure(figsize = (8,8))
-#     sns.countplot(y="subject", data= df)
-#     plt.show()
-
-# visualis fake and legit
-# def visulaize_fake_legit(df):
-#     plt.figure(figsize = (8,8))
-#     sns.countplot(y="is_fake", data= df)
-#     plt.show()
-
 def visualize_fake_word_cloud_plot(df, stop_words):
     '''
     visulaiz main key words of the fake news
@@ -62,6 +50,7 @@ def visualize_fake_word_cloud_plot(df, stop_words):
     :param stop_words: list of words to be excluded from the visualization
     :return:
     '''
+    print("Working on generating cloud word for fake news")
     plt.figure(figsize=(12,12))
     wc = WordCloud(max_words = 2000, width = 8000, height = 8000, stopwords = stop_words).generate(" ".join(df[df.is_fake==1].clean_joined))
     plt.imshow(wc, interpolation='bilinear')
@@ -74,6 +63,7 @@ def visualize_legit_word_cloud_plot(df, stop_words):
     :param stop_words: list of words to be excluded from the visulaization
     :return:
     '''
+    print("Working on generating cloud word for real news")
     plt.figure(figsize=(12,12))
     wc = WordCloud(max_words = 2000, width = 8000, height = 8000, stopwords = stop_words).generate(" ".join(df[df.is_fake==0].clean_joined))
     plt.imshow(wc, interpolation='bilinear')

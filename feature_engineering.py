@@ -20,8 +20,12 @@ import os
 stop_words = []
 
 def process_feature_engineering(df):
-    df_original = combine_two_columns(df, 'Title', 'Content', 'original')
-    df_clean, stop_words = remove_stop_words(df_original)
+    '''
+
+    :param df: dataset
+    :return: dataset with column name clean that contain non stop words
+    '''
+    df_clean, stop_words = remove_stop_words(df)
     total_words = find_total_words(df_clean)
     maxlen = find_max_token_length(df_clean)
     return df_clean, stop_words, total_words, maxlen
@@ -60,13 +64,13 @@ def remove_stop_words(df):
     :param df:dataframe
     :return:new datafream and stop_words
     '''
+    df_original = combine_two_columns(df, 'Title', 'Content', 'original')
     stop_words = stopwords.words('english')
-    stop_words.extend(['her', 'to', 'for', 'with', 'and'])
-    df['clean'] = df['original'].apply(preprocess_stop_word)
-    df['clean_joined'] = df['clean'].apply(lambda x: " ".join(x))
-    print(tabulate(df.head(5), headers='keys', tablefmt='psql'))
-    print(df.shape)
-    return df, stop_words
+    df_original['clean'] = df_original['original'].apply(preprocess_stop_word)
+    df_original['clean_joined'] = df_original['clean'].apply(lambda x: " ".join(x))
+    print(tabulate(df_original.head(5), headers='keys', tablefmt='psql'))
+    print(df_original.shape)
+    return df_original, stop_words
 
 
 def find_total_words(df):
